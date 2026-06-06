@@ -15,6 +15,45 @@ npm install
 npm run dev          # http://localhost:3000
 ```
 
+## Theme demos
+
+Seventeen full-page demos — one per industry vertical — built entirely from the component library.
+
+<table>
+  <tr>
+    <td align="center"><b>AI workspace</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-ai.png" alt="AI workspace" width="280"/></td>
+    <td align="center"><b>API docs</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-api-doc.png" alt="API docs" width="280"/></td>
+    <td align="center"><b>Blog</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-blog.png" alt="Blog" width="280"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Commerce</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-commerce.png" alt="Commerce" width="280"/></td>
+    <td align="center"><b>Common (auth / account)</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-common.png" alt="Common" width="280"/></td>
+    <td align="center"><b>Event tickets</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-event.png" alt="Event tickets" width="280"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Fintech dashboard</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-fintech.png" alt="Fintech dashboard" width="280"/></td>
+    <td align="center"><b>Food / restaurant</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-food.png" alt="Food / restaurant" width="280"/></td>
+    <td align="center"><b>Forum</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-forum.png" alt="Forum" width="280"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>IoT platform</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-iot.png" alt="IoT platform" width="280"/></td>
+    <td align="center"><b>Jobs board</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-jobs.png" alt="Jobs board" width="280"/></td>
+    <td align="center"><b>Landing page</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-landing.png" alt="Landing page" width="280"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Media (video)</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-media.png" alt="Media / video" width="280"/></td>
+    <td align="center"><b>NFT marketplace</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-nft.png" alt="NFT marketplace" width="280"/></td>
+    <td align="center"><b>Real estate</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-real-estate.png" alt="Real estate" width="280"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Social feed</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-social.png" alt="Social feed" width="280"/></td>
+    <td align="center"><b>Travel</b><br/><img src="https://raw.githubusercontent.com/kuraykaraaslan/kui-react/main/public/assets/img/screenshot-travel.png" alt="Travel" width="280"/></td>
+    <td></td>
+  </tr>
+</table>
+
+---
+
 ## Module layers
 
 ```

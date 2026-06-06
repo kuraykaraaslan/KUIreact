@@ -36,7 +36,7 @@ export default defineConfig({
     'countries-list',
     'country-flag-icons',
     'iso-639-1',
-    'kui-viewer',
+    '@kuraykaraaslan/kui-viewer',
     'react-hook-form',
     '@hookform/resolvers',
   ],

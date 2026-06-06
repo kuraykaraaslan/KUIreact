@@ -28,7 +28,7 @@ function copyInto(srcFile, destDir) {
 let copied = 0;
 
 // 1) The IFC parser worker(s) → /assets/
-const assetsSrc = join(ROOT, 'node_modules/kui-viewer/dist/assets');
+const assetsSrc = join(ROOT, 'node_modules/@kuraykaraaslan/kui-viewer/dist/assets');
 if (existsSync(assetsSrc)) {
   const dest = join(PUBLIC, 'assets');
   for (const name of readdirSync(assetsSrc)) {
@@ -47,7 +47,7 @@ if (existsSync(assetsSrc)) {
 // triggers `WebAssembly.instantiate(): Import #0 "env"…` at runtime. So prefer
 // kui-viewer's own nested copy, falling back to the top-level only if absent.
 const wasmCandidates = [
-  join(ROOT, 'node_modules/kui-viewer/node_modules/web-ifc'),
+  join(ROOT, 'node_modules/@kuraykaraaslan/kui-viewer/node_modules/web-ifc'),
   join(ROOT, 'node_modules/web-ifc'),
 ];
 const wasmSrc = wasmCandidates.find((p) => existsSync(p));
