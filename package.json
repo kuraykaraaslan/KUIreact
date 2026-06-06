@@ -1,18 +1,75 @@
 {
-  "name": "kui-react",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@kuraykaraaslan/kui-react",
+  "version": "1.0.0",
+  "description": "KUI React — atoms, molecules, organisms and common domain components",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./ui": {
+      "types": "./dist/ui.d.ts",
+      "import": "./dist/ui.mjs",
+      "require": "./dist/ui.js"
+    },
+    "./app": {
+      "types": "./dist/app.d.ts",
+      "import": "./dist/app.mjs",
+      "require": "./dist/app.js"
+    },
+    "./common": {
+      "types": "./dist/common.d.ts",
+      "import": "./dist/common.mjs",
+      "require": "./dist/common.js"
+    },
+    "./styles": "./styles/index.css"
+  },
+  "files": [
+    "dist",
+    "styles"
+  ],
+  "sideEffects": [
+    "./styles/index.css"
+  ],
   "scripts": {
     "dev": "next dev --port 3002",
     "predev": "node scripts/sync-kui-viewer-assets.mjs",
     "kui-viewer:assets": "node scripts/sync-kui-viewer-assets.mjs",
     "prebuild": "npm run kui-viewer:assets && npm run registry:snapshot",
     "build": "next build",
+    "build:lib": "tsup",
     "start": "next start",
     "lint": "eslint",
     "screenshots": "node scripts/take-screenshots.js",
     "registry:snapshot": "node scripts/build-registry-snapshot.mjs",
     "mcp:server": "node scripts/mcp-server.mjs"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19",
+    "next": "^14 || ^15 || ^16",
+    "tailwindcss": "^4",
+    "@fortawesome/react-fontawesome": ">=3",
+    "@fortawesome/fontawesome-svg-core": ">=7",
+    "@fortawesome/free-solid-svg-icons": ">=7",
+    "@fortawesome/free-brands-svg-icons": ">=7",
+    "@fortawesome/free-regular-svg-icons": ">=7"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": { "optional": true },
+    "chart.js": { "optional": true },
+    "react-chartjs-2": { "optional": true },
+    "quill": { "optional": true },
+    "leaflet": { "optional": true },
+    "react-leaflet": { "optional": true },
+    "zustand": { "optional": true },
+    "zod": { "optional": true },
+    "react-hook-form": { "optional": true },
+    "@hookform/resolvers": { "optional": true }
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -51,6 +108,7 @@
     "eslint-plugin-tailwindcss": "^3.18.3",
     "react-hook-form": "^7.75.0",
     "tailwindcss": "^4",
+    "tsup": "^8.5.1",
     "typescript": "^5"
   }
 }

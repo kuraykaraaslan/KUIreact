@@ -1,0 +1,129 @@
+/* KUI React — design tokens */
+
+:root {
+  --primary:         #3b82f6;
+  --primary-hover:   #2563eb;
+  --primary-active:  #1d4ed8;
+  --primary-subtle:  #eff6ff;
+  --primary-fg:      #ffffff;
+
+  --secondary:        #8b5cf6;
+  --secondary-hover:  #7c3aed;
+  --secondary-active: #6d28d9;
+  --secondary-subtle: #f5f3ff;
+  --secondary-fg:     #ffffff;
+
+  --surface-base:    #ffffff;
+  --surface-raised:  #f9fafb;
+  --surface-overlay: #f3f4f6;
+  --surface-sunken:  #e5e7eb;
+
+  --text-primary:    #111827;
+  --text-secondary:  #6b7280;
+  --text-disabled:   #9ca3af;
+  --text-inverse:    #ffffff;
+
+  --border:          #e5e7eb;
+  --border-strong:   #d1d5db;
+  --border-focus:    #3b82f6;
+
+  --success:         #22c55e;
+  --success-subtle:  #f0fdf4;
+  --success-fg:      #14532d;
+
+  --warning:         #f59e0b;
+  --warning-subtle:  #fffbeb;
+  --warning-fg:      #78350f;
+
+  --error:           #ef4444;
+  --error-subtle:    #fef2f2;
+  --error-fg:        #7f1d1d;
+
+  --info:            #06b6d4;
+  --info-subtle:     #ecfeff;
+  --info-fg:         #164e63;
+}
+
+.dark {
+  --primary:          #60a5fa;
+  --primary-hover:    #93c5fd;
+  --primary-subtle:   #1e3a5f;
+  --primary-active:   #1d4ed8;
+  --primary-fg:       #ffffff;
+
+  --secondary:        #a78bfa;
+  --secondary-hover:  #c4b5fd;
+  --secondary-active: #7c3aed;
+  --secondary-subtle: #2e1065;
+  --secondary-fg:     #ffffff;
+
+  --text-inverse:     #111827;
+
+  --surface-base:    #0f172a;
+  --surface-raised:  #1e293b;
+  --surface-overlay: #334155;
+  --surface-sunken:  #1e293b;
+
+  --text-primary:    #f1f5f9;
+  --text-secondary:  #94a3b8;
+  --text-disabled:   #475569;
+
+  --border:          #334155;
+  --border-strong:   #475569;
+  --border-focus:    #60a5fa;
+
+  --success:         #4ade80;
+  --success-subtle:  #052e16;
+  --success-fg:      #bbf7d0;
+
+  --warning:         #fbbf24;
+  --warning-subtle:  #451a03;
+  --warning-fg:      #fef3c7;
+
+  --error:           #f87171;
+  --error-subtle:    #450a0a;
+  --error-fg:        #fee2e2;
+
+  --info:            #22d3ee;
+  --info-subtle:     #083344;
+  --info-fg:         #cffafe;
+}
+
+/* Sidebar scrollbar utility — used by AppSidebar */
+.sidebar-scrollbar-hover {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.sidebar-scrollbar-hover:hover,
+.sidebar-scrollbar-hover:focus-visible,
+.sidebar-scrollbar-hover:focus-within {
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.sidebar-scrollbar-hover::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.sidebar-scrollbar-hover::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scrollbar-hover::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+}
+
+.sidebar-scrollbar-hover:hover::-webkit-scrollbar-thumb,
+.sidebar-scrollbar-hover:focus-visible::-webkit-scrollbar-thumb,
+.sidebar-scrollbar-hover:focus-within::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+}
+
+.sidebar-scrollbar-hover:hover::-webkit-scrollbar-thumb:hover,
+.sidebar-scrollbar-hover:focus-visible::-webkit-scrollbar-thumb:hover,
+.sidebar-scrollbar-hover:focus-within::-webkit-scrollbar-thumb:hover {
+  background: var(--text-disabled);
+}
