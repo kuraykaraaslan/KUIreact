@@ -45,3 +45,7 @@ next-env.d.ts
 /public/wasm/
 /public/assets/ifc-parser.worker-*.js
 /public/assets/ifc-parser.worker-*.js.map
+
+# AI assistant data
+.claude*
+.cursor*
