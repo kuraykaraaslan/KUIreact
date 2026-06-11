@@ -1,6 +1,6 @@
 {
   "name": "@kuraykaraaslan/kui-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "KUI React — atoms, molecules, organisms and common domain components",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
