@@ -42,6 +42,7 @@ const themes: { label: string; href: string; desc: string; screenshot: string }[
   { label: 'Social',          href: '/theme/social',      desc: 'Social network with feed, chat & marketplace', screenshot: '/assets/img/screenshot-social.png' },
   { label: 'IoT Platform',    href: '/theme/iot',         desc: 'Device fleet, telemetry & rule engine',     screenshot: '/assets/img/screenshot-iot.png' },
   { label: 'NFT Marketplace', href: '/theme/nft',         desc: 'Collections, auctions & wallet connect',    screenshot: '/assets/img/screenshot-nft.png' },
+  { label: 'Personalise',     href: '/theme/promozone',   desc: 'B2B promo catalog & quote requests',        screenshot: '/assets/img/screenshot-promozone.png' },
 ];
 
 export function HomePanel() {

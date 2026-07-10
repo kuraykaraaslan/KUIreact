@@ -21,23 +21,23 @@ For lightweight, non-BIM 3D scenes — prefer a thinner Three.js wrapper or reac
 
 ```tsx
 'use client';
-// Install:  npm install kui-viewer
-// React subpath: kui-viewer/react
+// Install:  npm install @kuraykaraaslan/kui-viewer
+// React subpath: @kuraykaraaslan/kui-viewer/react
 //
-// Since 0.0.3 the published `kui-viewer/styles.css` no longer ships the
+// Since 0.0.3 the published styles.css no longer ships the
 // Tailwind preflight or default theme tokens, so importing it next to your
 // project-level Tailwind setup is safe — design tokens stay isolated under
 // the `--color-kui-viewer-*` namespace.
 import { useEffect, useRef } from 'react';
-import 'kui-viewer/styles.css';
+import '@kuraykaraaslan/kui-viewer/styles.css';
 import {
   KUIViewer,
   ModelLoader,
   NavCube,
   useViewer,
   useFitToScene,
-} from 'kui-viewer/react';
-import { ZoomSlider } from 'kui-viewer';
+} from '@kuraykaraaslan/kui-viewer/react';
+import { ZoomSlider } from '@kuraykaraaslan/kui-viewer';
 
 // ZoomSlider ships no React wrapper — mount the vanilla element by hand and
 // dispose it on unmount (the same pattern <NavCube/> uses internally).

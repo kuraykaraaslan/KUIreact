@@ -493,6 +493,7 @@ const NAV_GROUPS: NavGroup[] = [
       { id: 'social',       title: 'Social Theme',       category: 'Theme', abbr: 'SO', href: '/theme/social',         since: '2026-05' },
       { id: 'iot',          title: 'IoT Theme',          category: 'Theme', abbr: 'IT', href: '/theme/iot',            since: '2026-05' },
       { id: 'nft',          title: 'NFT Theme',          category: 'Theme', abbr: 'NT', href: '/theme/nft',            since: '2026-05' },
+      { id: 'promozone',    title: 'Personalise Theme',  category: 'Theme', abbr: 'PE', href: '/theme/promozone',      since: '2026-07' },
     ],
   },
   {

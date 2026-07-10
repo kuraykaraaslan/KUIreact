@@ -3,7 +3,7 @@
   "name": "kui-react",
   "version": "0.1.0",
   "registryVersion": "1.0.0",
-  "generatedAt": "2026-05-29T15:24:50.963Z",
+  "generatedAt": "2026-07-10T16:33:24.767Z",
   "description": "Machine-readable catalog of every component, theme, design token, and convention in the kui-react library. Consume this from an AI assistant to know what exists, where it lives, and how to use it.",
   "layers": {
     "ui": "modules/ui/ — Primitive, locally-stateful components (atoms + molecules). No business logic. Every file starts with 'use client' and imports cn from @/libs/utils/cn.",
@@ -5010,17 +5010,17 @@
       "whenNotToUse": "For lightweight, non-BIM 3D scenes — prefer a thinner Three.js wrapper or react-three-fiber. KUIViewer pulls in web-ifc WASM and @thatopen/fragments and is sized for AEC workloads.",
       "designTokens": [],
       "dependencies": [
-        "kui-viewer",
+        "@kuraykaraaslan/kui-viewer",
         "three",
         "web-ifc",
         "@thatopen/fragments",
         "zustand"
       ],
       "external": {
-        "packageName": "kui-viewer",
-        "version": "0.0.7",
+        "packageName": "@kuraykaraaslan/kui-viewer",
+        "version": "0.0.8",
         "homepage": "https://kui-viewer.kuray.dev",
-        "npm": "https://www.npmjs.com/package/kui-viewer",
+        "npm": "https://www.npmjs.com/package/@kuraykaraaslan/kui-viewer",
         "github": "https://github.com/kuraykaraaslan/kui-viewer"
       },
       "variantCount": 0
@@ -5161,6 +5161,14 @@
       "route": "/theme/nft",
       "consumesDomain": "nft",
       "since": "2026-05",
+      "status": "stable"
+    },
+    {
+      "id": "promozone",
+      "title": "Personalise Theme",
+      "route": "/theme/promozone",
+      "consumesDomain": "promozone",
+      "since": "2026-07",
       "status": "stable"
     }
   ]
