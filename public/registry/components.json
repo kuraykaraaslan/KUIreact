@@ -3,7 +3,7 @@
   "name": "kui-react",
   "version": "0.1.0",
   "registryVersion": "1.0.0",
-  "generatedAt": "2026-07-10T16:33:24.767Z",
+  "generatedAt": "2026-08-25T23:01:21.343Z",
   "description": "Machine-readable catalog of every component, theme, design token, and convention in the kui-react library. Consume this from an AI assistant to know what exists, where it lives, and how to use it.",
   "layers": {
     "ui": "modules/ui/ — Primitive, locally-stateful components (atoms + molecules). No business logic. Every file starts with 'use client' and imports cn from @/libs/utils/cn.",
@@ -2051,6 +2051,52 @@
         "--warning",
         "--warning-subtle"
       ]
+    },
+    {
+      "id": "bulk-action-table",
+      "name": "BulkActionTable",
+      "layer": "ui",
+      "category": "Organism",
+      "filePath": "modules/ui/BulkActionTable.tsx",
+      "abbr": "Bt",
+      "description": "Table with **id-keyed** row selection and a bulk-action bar. `DataTable`’s own `selectable` prop keys selection by array index and only works in the deprecated legacy view, so selections there follow the wrong rows once anything sorts or paginates.",
+      "source": "'use client';\n// Id-keyed row selection plus a bulk-action bar. Selection survives sort,\n// filter and pagination because it is keyed on the row's own id, never on its\n// position in the array.\nexport function BulkActionTable({ columns, rows, rowId, selected, onSelectedChange, actions = [], isRowSelectable, totalMatching, onSelectAllMatching }) {\n  const selectedSet = new Set(selected);\n  const selectableRows = rows.filter((r) => (isRowSelectable ? isRowSelectable(r) === true : true));\n  const allVisibleSelected = selectableRows.length > 0 && selectableRows.every((r) => selectedSet.has(rowId(r)));\n\n  function toggleAllVisible() {\n    const next = new Set(selectedSet);\n    // Deselect only what is visible: a selection made on page 1 must survive\n    // clearing page 2.\n    for (const row of selectableRows) allVisibleSelected ? next.delete(rowId(row)) : next.add(rowId(row));\n    onSelectedChange([...next]);\n  }\n\n  // `indeterminate` is a DOM property, not an attribute — without the ref a\n  // partial selection looks identical to none.\n  const headerCheckbox = (\n    <input type=\"checkbox\" checked={allVisibleSelected}\n      ref={(el) => { if (el) el.indeterminate = !allVisibleSelected && selectableRows.some((r) => selectedSet.has(rowId(r))); }}\n      onChange={toggleAllVisible} aria-label=\"Select all rows on this page\" />\n  );\n\n  return (\n    <div>\n      {selected.length > 0 && (\n        <div role=\"region\" aria-label=\"Bulk actions\">\n          <span>{selected.length} selected</span>\n          {totalMatching > rows.length && (\n            <button onClick={onSelectAllMatching}>Select all {totalMatching} matching</button>\n          )}\n          {actions.map((a) => <button key={a.key} onClick={() => a.onAction([...selected])}>{a.label}</button>)}\n        </div>\n      )}\n      <Table columns={[{ key: '__selection', header: headerCheckbox, render: rowCheckbox }, ...columns]} rows={rows} />\n    </div>\n  );\n}",
+      "variants": [
+        {
+          "title": "Selection and actions",
+          "code": "<BulkActionTable\n  rows={companies}\n  rowId={(c) => c.companyId}\n  selected={selected}\n  onSelectedChange={setSelected}\n  columns={columns}\n  actions={[{ key: 'enrich', label: 'Enrich', onAction: enrich }]}\n/>"
+        },
+        {
+          "title": "Unselectable rows, and select-all-matching",
+          "code": "<BulkActionTable\n  isRowSelectable={(c) => (c.suppressed ? 'Suppressed' : true)}\n  totalMatching={total}\n  onSelectAllMatching={selectEverything}\n  …\n/>"
+        }
+      ],
+      "status": "stable",
+      "since": "2026-08",
+      "designTokens": []
+    },
+    {
+      "id": "timeline",
+      "name": "Timeline",
+      "layer": "ui",
+      "category": "Organism",
+      "filePath": "modules/ui/Timeline.tsx",
+      "abbr": "Tl",
+      "description": "Chronological activity feed with sticky day headings. Grouping uses the viewer’s local day via `Intl`, not the raw ISO date — an event at 23:50 UTC otherwise lands under the wrong heading for anyone east or west of the server.",
+      "source": "'use client';\n// Chronological feed with sticky day headings.\nexport function Timeline({ items, timeZone, locale, groupByDay = true, emptyMessage = 'Nothing here yet.' }) {\n  if (items.length === 0) return <p>{emptyMessage}</p>;\n\n  // Grouping uses the VIEWER's local day. An event at 23:50 UTC belongs to a\n  // different day depending on who is looking, and grouping on the raw ISO\n  // date puts it under the wrong heading for anyone east or west of the server.\n  const dayFormat  = new Intl.DateTimeFormat(locale, { timeZone, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });\n  // hourCycle, not hour12:false — the latter renders midnight as hour \"24\".\n  const timeFormat = new Intl.DateTimeFormat(locale, { timeZone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });\n\n  // Grouping is computed BEFORE rendering. React 19 may restart a render, and\n  // a closure variable mutated inside map() survives the restart and puts the\n  // day headings in the wrong places.\n  const sorted   = [...items].sort((a, b) => +new Date(b.at) - +new Date(a.at));\n  const rendered = sorted.map((item, i) => ({\n    item,\n    day: dayFormat.format(new Date(item.at)),\n    showDay: groupByDay && dayFormat.format(new Date(item.at)) !== (i === 0 ? null : dayFormat.format(new Date(sorted[i - 1].at))),\n  }));\n\n  return (\n    <ol>\n      {rendered.map(({ item, day, showDay }) => (\n        <Fragment key={item.id}>\n          {showDay && <li className=\"sticky top-0\">{day}</li>}\n          <li>\n            <span className={TONE_CLASS[item.tone ?? 'default']}>{item.icon}</span>\n            <span>{item.title}</span>\n            <time dateTime={new Date(item.at).toISOString()}>{timeFormat.format(new Date(item.at))}</time>\n            {item.body && <div>{item.body}</div>}\n          </li>\n        </Fragment>\n      ))}\n    </ol>\n  );\n}",
+      "variants": [
+        {
+          "title": "Grouped by day",
+          "code": "<Timeline\n  items={activities.map((a) => ({\n    id: a.activityId,\n    at: a.occurredAt,\n    title: a.type,\n    body: a.summary,\n  }))}\n/>"
+        },
+        {
+          "title": "Empty, and ungrouped",
+          "code": "<Timeline items={[]} emptyMessage=\"No activity yet.\" />\n<Timeline items={items} groupByDay={false} />"
+        }
+      ],
+      "status": "stable",
+      "since": "2026-08",
+      "designTokens": []
     },
     {
       "id": "video-player",

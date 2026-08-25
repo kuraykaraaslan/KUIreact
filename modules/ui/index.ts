@@ -80,3 +80,7 @@ export { LazyDataTable, LazyAdvancedDataTable, LazyServerDataTable, LazyDateRang
 // Zustand toast store — programmatic API
 export { useToastStore, toast, getEffectiveDuration } from './Toast.store';
 export type { ToastItem, ToastVariant, ToastItemAction } from './Toast.store';
+export { BulkActionTable } from './BulkActionTable';
+export type { BulkActionTableProps, BulkAction } from './BulkActionTable';
+export { Timeline } from './Timeline';
+export type { TimelineProps, TimelineItem } from './Timeline';

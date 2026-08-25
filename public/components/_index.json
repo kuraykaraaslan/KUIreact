@@ -293,6 +293,18 @@
     "category": "Organism",
     "file": "content-score-bar.md"
   },
+  "bulk-action-table": {
+    "name": "BulkActionTable",
+    "layer": "ui",
+    "category": "Organism",
+    "file": "bulk-action-table.md"
+  },
+  "timeline": {
+    "name": "Timeline",
+    "layer": "ui",
+    "category": "Organism",
+    "file": "timeline.md"
+  },
   "video-player": {
     "name": "VideoPlayer",
     "layer": "ui",

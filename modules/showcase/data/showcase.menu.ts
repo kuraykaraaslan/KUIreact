@@ -75,6 +75,8 @@ const NAV_GROUPS: NavGroup[] = [
       { id: 'breadcrumb',          title: 'Breadcrumb',        category: 'Organism', abbr: 'Bc', since: '2025-02' },
       { id: 'data-table',          title: 'DataTable',         category: 'Organism', abbr: 'Dt', since: '2025-03' },
       { id: 'advanced-data-table', title: 'AdvancedDataTable', category: 'Organism', abbr: 'At', since: '2025-03', status: 'beta' },
+      { id: 'bulk-action-table',   title: 'BulkActionTable',   category: 'Organism', abbr: 'Bt', since: '2026-08' },
+      { id: 'timeline',            title: 'Timeline',          category: 'Organism', abbr: 'Tl', since: '2026-08' },
       { id: 'stepper',             title: 'Stepper',           category: 'Organism', abbr: 'St', since: '2025-02' },
       { id: 'tree-view',           title: 'TreeView',          category: 'Organism', abbr: 'Tv', since: '2025-03' },
       { id: 'content-score-bar',   title: 'ContentScoreBar',   category: 'Organism', abbr: 'Cs', since: '2025-03' },

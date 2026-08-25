@@ -38,7 +38,15 @@ export type PaginationState = {
  */
 export type Column<T> = {
   key: keyof T | string;
-  header: string;
+  /**
+   * Column heading.
+   *
+   * Widened from `string` to `ReactNode` so a header can carry a control —
+   * a select-all checkbox, a help tooltip — without the consumer overlaying
+   * one absolutely and hoping the alignment holds. Every existing `string`
+   * header keeps working unchanged.
+   */
+  header: ReactNode;
   render?: (row: T) => ReactNode;
   align?: 'left' | 'center' | 'right';
   sortable?: boolean;

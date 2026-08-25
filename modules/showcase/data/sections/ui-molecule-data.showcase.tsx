@@ -6,6 +6,8 @@ import { Table } from '@/modules/ui/Table';
 import { DataTable } from '@/modules/ui/DataTable';
 import { ContentScoreBar, type ScoreRule } from '@/modules/ui/ContentScoreBar';
 import { AdvancedDataTable } from '@/modules/ui/AdvancedDataTable';
+import { BulkActionTable } from '@/modules/ui/BulkActionTable';
+import { Timeline } from '@/modules/ui/Timeline';
 import { useCallback, useState } from 'react';
 import type { ShowcaseComponent } from '../showcase.types';
 import type {
@@ -464,6 +466,212 @@ export function ContentScoreBar({ value, rules, label, className }) {
             return <PwdDemo />;
           })(),
           code: `const rules = [\n  { label: 'Min 8 chars',  check: (v) => v.length >= 8,          points: 25 },\n  { label: 'Uppercase',    check: (v) => /[A-Z]/.test(v),        points: 25 },\n  { label: 'Number',       check: (v) => /\\d/.test(v),            points: 25 },\n  { label: 'Special char', check: (v) => /[^A-Za-z0-9]/.test(v), points: 25 },\n];\n<ContentScoreBar value={password} rules={rules} label="Password strength" />`,
+        },
+      ],
+    },
+    {
+      id: 'bulk-action-table',
+      title: 'BulkActionTable',
+      category: 'Organism',
+      abbr: 'Bt',
+      description:
+        'Table with **id-keyed** row selection and a bulk-action bar. `DataTable`’s own `selectable` prop keys selection by array index and only works in the deprecated legacy view, so selections there follow the wrong rows once anything sorts or paginates.',
+      filePath: 'modules/ui/BulkActionTable.tsx',
+      sourceCode: `'use client';
+// Id-keyed row selection plus a bulk-action bar. Selection survives sort,
+// filter and pagination because it is keyed on the row's own id, never on its
+// position in the array.
+export function BulkActionTable({ columns, rows, rowId, selected, onSelectedChange, actions = [], isRowSelectable, totalMatching, onSelectAllMatching }) {
+  const selectedSet = new Set(selected);
+  const selectableRows = rows.filter((r) => (isRowSelectable ? isRowSelectable(r) === true : true));
+  const allVisibleSelected = selectableRows.length > 0 && selectableRows.every((r) => selectedSet.has(rowId(r)));
+
+  function toggleAllVisible() {
+    const next = new Set(selectedSet);
+    // Deselect only what is visible: a selection made on page 1 must survive
+    // clearing page 2.
+    for (const row of selectableRows) allVisibleSelected ? next.delete(rowId(row)) : next.add(rowId(row));
+    onSelectedChange([...next]);
+  }
+
+  // \`indeterminate\` is a DOM property, not an attribute — without the ref a
+  // partial selection looks identical to none.
+  const headerCheckbox = (
+    <input type="checkbox" checked={allVisibleSelected}
+      ref={(el) => { if (el) el.indeterminate = !allVisibleSelected && selectableRows.some((r) => selectedSet.has(rowId(r))); }}
+      onChange={toggleAllVisible} aria-label="Select all rows on this page" />
+  );
+
+  return (
+    <div>
+      {selected.length > 0 && (
+        <div role="region" aria-label="Bulk actions">
+          <span>{selected.length} selected</span>
+          {totalMatching > rows.length && (
+            <button onClick={onSelectAllMatching}>Select all {totalMatching} matching</button>
+          )}
+          {actions.map((a) => <button key={a.key} onClick={() => a.onAction([...selected])}>{a.label}</button>)}
+        </div>
+      )}
+      <Table columns={[{ key: '__selection', header: headerCheckbox, render: rowCheckbox }, ...columns]} rows={rows} />
+    </div>
+  );
+}`,
+      variants: [
+        {
+          title: 'Selection and actions',
+          layout: 'stack' as const,
+          preview: (() => {
+            type Row = { id: string; company: string; country: string; stage: string; [key: string]: unknown };
+            const ROWS: Row[] = [
+              { id: 'c1', company: 'Northwind Traders', country: 'DE', stage: 'new' },
+              { id: 'c2', company: 'Contoso Ltd',       country: 'GB', stage: 'contacted' },
+              { id: 'c3', company: 'Fabrikam',          country: 'NL', stage: 'replied' },
+              { id: 'c4', company: 'Adventure Works',   country: 'TR', stage: 'new' },
+            ];
+            function Demo() {
+              const [selected, setSelected] = useState<string[]>(['c1']);
+              return (
+                <div className="w-full">
+                  <BulkActionTable<Row, string>
+                    rows={ROWS}
+                    rowId={(r) => r.id}
+                    selected={selected}
+                    onSelectedChange={setSelected}
+                    columns={[
+                      { key: 'company', header: 'Company' },
+                      { key: 'country', header: 'Country' },
+                      { key: 'stage',   header: 'Stage' },
+                    ]}
+                    actions={[
+                      { key: 'enrich', label: 'Enrich', onAction: () => undefined },
+                      { key: 'remove', label: 'Remove', destructive: true, onAction: () => setSelected([]) },
+                    ]}
+                  />
+                </div>
+              );
+            }
+            return <Demo />;
+          })(),
+          code: `<BulkActionTable\n  rows={companies}\n  rowId={(c) => c.companyId}\n  selected={selected}\n  onSelectedChange={setSelected}\n  columns={columns}\n  actions={[{ key: 'enrich', label: 'Enrich', onAction: enrich }]}\n/>`,
+        },
+        {
+          title: 'Unselectable rows, and select-all-matching',
+          layout: 'stack' as const,
+          preview: (() => {
+            type Row = { id: string; company: string; reason: string; [key: string]: unknown };
+            const ROWS: Row[] = [
+              { id: 'c1', company: 'Northwind Traders', reason: '' },
+              { id: 'c2', company: 'Contoso Ltd',       reason: 'Suppressed — replied "stop"' },
+              { id: 'c3', company: 'Fabrikam',          reason: '' },
+            ];
+            function Demo() {
+              const [selected, setSelected] = useState<string[]>([]);
+              return (
+                <div className="w-full">
+                  <BulkActionTable<Row, string>
+                    rows={ROWS}
+                    rowId={(r) => r.id}
+                    selected={selected}
+                    onSelectedChange={setSelected}
+                    isRowSelectable={(r) => (r.reason ? r.reason : true)}
+                    totalMatching={1240}
+                    onSelectAllMatching={() => undefined}
+                    columns={[
+                      { key: 'company', header: 'Company' },
+                      { key: 'reason',  header: 'Why not selectable' },
+                    ]}
+                    actions={[{ key: 'email', label: 'Email', onAction: () => undefined }]}
+                  />
+                </div>
+              );
+            }
+            return <Demo />;
+          })(),
+          code: `<BulkActionTable\n  isRowSelectable={(c) => (c.suppressed ? 'Suppressed' : true)}\n  totalMatching={total}\n  onSelectAllMatching={selectEverything}\n  …\n/>`,
+        },
+      ],
+    },
+    {
+      id: 'timeline',
+      title: 'Timeline',
+      category: 'Organism',
+      abbr: 'Tl',
+      description:
+        'Chronological activity feed with sticky day headings. Grouping uses the viewer’s local day via `Intl`, not the raw ISO date — an event at 23:50 UTC otherwise lands under the wrong heading for anyone east or west of the server.',
+      filePath: 'modules/ui/Timeline.tsx',
+      sourceCode: `'use client';
+// Chronological feed with sticky day headings.
+export function Timeline({ items, timeZone, locale, groupByDay = true, emptyMessage = 'Nothing here yet.' }) {
+  if (items.length === 0) return <p>{emptyMessage}</p>;
+
+  // Grouping uses the VIEWER's local day. An event at 23:50 UTC belongs to a
+  // different day depending on who is looking, and grouping on the raw ISO
+  // date puts it under the wrong heading for anyone east or west of the server.
+  const dayFormat  = new Intl.DateTimeFormat(locale, { timeZone, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  // hourCycle, not hour12:false — the latter renders midnight as hour "24".
+  const timeFormat = new Intl.DateTimeFormat(locale, { timeZone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+
+  // Grouping is computed BEFORE rendering. React 19 may restart a render, and
+  // a closure variable mutated inside map() survives the restart and puts the
+  // day headings in the wrong places.
+  const sorted   = [...items].sort((a, b) => +new Date(b.at) - +new Date(a.at));
+  const rendered = sorted.map((item, i) => ({
+    item,
+    day: dayFormat.format(new Date(item.at)),
+    showDay: groupByDay && dayFormat.format(new Date(item.at)) !== (i === 0 ? null : dayFormat.format(new Date(sorted[i - 1].at))),
+  }));
+
+  return (
+    <ol>
+      {rendered.map(({ item, day, showDay }) => (
+        <Fragment key={item.id}>
+          {showDay && <li className="sticky top-0">{day}</li>}
+          <li>
+            <span className={TONE_CLASS[item.tone ?? 'default']}>{item.icon}</span>
+            <span>{item.title}</span>
+            <time dateTime={new Date(item.at).toISOString()}>{timeFormat.format(new Date(item.at))}</time>
+            {item.body && <div>{item.body}</div>}
+          </li>
+        </Fragment>
+      ))}
+    </ol>
+  );
+}`,
+      variants: [
+        {
+          title: 'Grouped by day',
+          layout: 'stack' as const,
+          preview: (
+            <div className="w-full max-w-lg">
+              <Timeline
+                items={[
+                  { id: '1', at: '2026-08-25T09:12:00Z', title: 'Email sent', body: 'Re: shipping integration', tone: 'info' },
+                  { id: '2', at: '2026-08-25T14:40:00Z', title: 'Reply received', body: '“Interesting — can you send details?”', tone: 'success' },
+                  { id: '3', at: '2026-08-24T16:05:00Z', title: 'Call completed', body: '4m 12s · reached the right person', tone: 'default' },
+                  { id: '4', at: '2026-08-24T10:00:00Z', title: 'Enriched', body: '18 employees · logistics software', tone: 'default' },
+                ]}
+              />
+            </div>
+          ),
+          code: `<Timeline\n  items={activities.map((a) => ({\n    id: a.activityId,\n    at: a.occurredAt,\n    title: a.type,\n    body: a.summary,\n  }))}\n/>`,
+        },
+        {
+          title: 'Empty, and ungrouped',
+          layout: 'stack' as const,
+          preview: (
+            <div className="flex w-full max-w-lg flex-col gap-6">
+              <Timeline items={[]} emptyMessage="No activity on this company yet." />
+              <Timeline
+                groupByDay={false}
+                items={[
+                  { id: '1', at: '2026-08-25T09:12:00Z', title: 'Bounced', tone: 'error' },
+                  { id: '2', at: '2026-08-25T08:00:00Z', title: 'Queued', tone: 'warning' },
+                ]}
+              />
+            </div>
+          ),
+          code: `<Timeline items={[]} emptyMessage="No activity yet." />\n<Timeline items={items} groupByDay={false} />`,
         },
       ],
     },

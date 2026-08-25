@@ -3,7 +3,7 @@
   "name": "kui-react",
   "version": "0.1.0",
   "registryVersion": "1.0.0",
-  "generatedAt": "2026-07-10T16:33:24.767Z",
+  "generatedAt": "2026-08-25T23:01:21.343Z",
   "description": "Machine-readable catalog of every component, theme, design token, and convention in the kui-react library. Consume this from an AI assistant to know what exists, where it lives, and how to use it.",
   "layers": {
     "ui": "modules/ui/ — Primitive, locally-stateful components (atoms + molecules). No business logic. Every file starts with 'use client' and imports cn from @/libs/utils/cn.",
@@ -1177,6 +1177,32 @@
         "--warning-subtle"
       ],
       "variantCount": 3
+    },
+    {
+      "id": "bulk-action-table",
+      "name": "BulkActionTable",
+      "layer": "ui",
+      "category": "Organism",
+      "filePath": "modules/ui/BulkActionTable.tsx",
+      "abbr": "Bt",
+      "description": "Table with **id-keyed** row selection and a bulk-action bar. `DataTable`’s own `selectable` prop keys selection by array index and only works in the deprecated legacy view, so selections there follow the wrong rows once anything sorts or paginates.",
+      "status": "stable",
+      "since": "2026-08",
+      "designTokens": [],
+      "variantCount": 2
+    },
+    {
+      "id": "timeline",
+      "name": "Timeline",
+      "layer": "ui",
+      "category": "Organism",
+      "filePath": "modules/ui/Timeline.tsx",
+      "abbr": "Tl",
+      "description": "Chronological activity feed with sticky day headings. Grouping uses the viewer’s local day via `Intl`, not the raw ISO date — an event at 23:50 UTC otherwise lands under the wrong heading for anyone east or west of the server.",
+      "status": "stable",
+      "since": "2026-08",
+      "designTokens": [],
+      "variantCount": 2
     },
     {
       "id": "video-player",
