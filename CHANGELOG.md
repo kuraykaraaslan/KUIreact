@@ -4,6 +4,27 @@ All notable changes to this project will be documented here. Format follows [Kee
 
 ## [Unreleased]
 
+### Fixed
+
+- **`LanguageSwitcher` and `I18nTypes` no longer guess a country from a language code.** The
+  old heuristic was `lang.toUpperCase()`, which is correct only where a language code happens
+  to coincide with the country code of a place that speaks it — a mostly-European accident.
+  Elsewhere it either produced a non-country (`ja`→`JA`, `ko`→`KO`, `zh`→`ZH`; the emoji is two
+  meaningless letters and `flagcdn.com/w40/ja.png` is a 404) or, worse, a real but wrong
+  country: `ky` (Kyrgyz) → `KY`, the **Cayman Islands**, when Kyrgyzstan is `KG`. That second
+  class is silent — nothing throws, nothing 404s, and the wrong flag looks deliberate.
+  `langToRegion()` is now an explicit map and returns `null` for languages it does not know, so
+  an unmapped language renders with **no** flag rather than somebody else's.
+- **`getOgLocale` no longer emits a wrong territory.** It returns the bare language (`ky`)
+  instead of a fabricated pair (`ky_KY`) when the region is unknown.
+- **`getLangFlagUrl` is now `string | null`** instead of returning a URL that either 404s or
+  loads the wrong country's flag. **Breaking** for any caller that assumed a string.
+- **`LanguageSwitcher` no longer keeps its own second copy of the mapping.** It had a private
+  five-entry `langToCountry` (`en, tr, de, fr, ar`) and fell through to the heuristic for
+  everything else; it now reads the one map in `I18nTypes`. The `icon: … as any` cast went with
+  it — `DropdownItem.icon` is `React.ReactNode`, so the cast was never needed and its comment
+  ("DropdownMenu string bekliyor") was wrong.
+
 ## 2026-05-17 — 10 new theme pages + 27 new domain components
 
 ### Added — Theme routes
