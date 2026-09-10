@@ -83,7 +83,12 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: "/favicon.ico",
+    // SVG first: it is the generated source (brand/build.mjs) and the only one
+    // that stays sharp. The .ico is the fallback for browsers that ignore it.
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
     apple: "/apple-touch-icon.png",
     other: [{ rel: "manifest", url: "/site.webmanifest" }],
   },
